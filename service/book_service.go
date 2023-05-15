@@ -1,8 +1,8 @@
 package service
 
 import (
+	"charlybutar21/golang-restful-api/model/dto"
 	"context"
-	"github.com/golang-restful-api/model/dto"
 )
 
 type BookService interface {

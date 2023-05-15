@@ -1,8 +1,8 @@
 package helper
 
 import (
-	"github.com/golang-restful-api/model/domain"
-	"github.com/golang-restful-api/model/dto"
+	"charlybutar21/golang-restful-api/model/domain"
+	"charlybutar21/golang-restful-api/model/dto"
 )
 
 func ToBookResponse(book domain.Book) dto.BookResponse {

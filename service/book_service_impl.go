@@ -1,27 +1,34 @@
 package service
 
 import (
+	"charlybutar21/golang-restful-api/exception"
+	"charlybutar21/golang-restful-api/helper"
+	"charlybutar21/golang-restful-api/model/domain"
+	"charlybutar21/golang-restful-api/model/dto"
+	"charlybutar21/golang-restful-api/repository"
 	"context"
 	"database/sql"
-	"github.com/golang-restful-api/helper"
-	"github.com/golang-restful-api/model/domain"
-	"github.com/golang-restful-api/model/dto"
-	"github.com/golang-restful-api/repository"
+	"github.com/go-playground/validator/v10"
 )
 
 type BookServiceImpl struct {
 	BookRepository repository.BookRepository
 	DB             *sql.DB
+	Validate       *validator.Validate
 }
 
-func NewBookService(bookRepository repository.BookRepository, DB *sql.DB) BookService {
+func NewBookService(bookRepository repository.BookRepository, DB *sql.DB, validate *validator.Validate) BookService {
 	return &BookServiceImpl{
 		BookRepository: bookRepository,
 		DB:             DB,
+		Validate:       validate,
 	}
 }
 
 func (service *BookServiceImpl) Create(ctx context.Context, request dto.CreateBookRequest) dto.BookResponse {
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
@@ -36,12 +43,17 @@ func (service *BookServiceImpl) Create(ctx context.Context, request dto.CreateBo
 }
 
 func (service *BookServiceImpl) Update(ctx context.Context, request dto.UpdateBookRequest) dto.BookResponse {
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
+
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
 	book, err := service.BookRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	book.Name = request.Name
 
@@ -56,7 +68,9 @@ func (service *BookServiceImpl) Delete(ctx context.Context, bookId int) {
 	defer helper.CommitOrRollback(tx)
 
 	book, err := service.BookRepository.FindById(ctx, tx, bookId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	service.BookRepository.Delete(ctx, tx, book)
 }
@@ -67,7 +81,9 @@ func (service *BookServiceImpl) FindById(ctx context.Context, bookId int) dto.Bo
 	defer helper.CommitOrRollback(tx)
 
 	book, err := service.BookRepository.FindById(ctx, tx, bookId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return helper.ToBookResponse(book)
 }

@@ -1,11 +1,11 @@
 package repository
 
 import (
+	"charlybutar21/golang-restful-api/helper"
+	"charlybutar21/golang-restful-api/model/domain"
 	"context"
 	"database/sql"
 	"errors"
-	"github.com/golang-restful-api/helper"
-	"github.com/golang-restful-api/model/domain"
 )
 
 type BookRepositoryImpl struct {

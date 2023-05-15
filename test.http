@@ -1,0 +1,34 @@
+### Get all books
+GET http://localhost:3000/api/books
+X-API-Key: RAHASIA
+Accept: application/json
+
+### Create new book
+POST http://localhost:3000/api/books
+X-API-Key: RAHASIA
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "Religion"
+}
+
+### Get book by Id
+GET http://localhost:3000/api/books/1
+X-API-Key: RAHASIA
+Accept: application/json
+
+### Update book by id
+PUT http://localhost:3000/api/books/5
+X-API-Key: RAHASIA
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "Fashion"
+}
+
+### Delete book by id
+DELETE http://localhost:3000/api/books/5
+X-API-Key: RAHASIA
+Accept: application/json

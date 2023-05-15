@@ -14,7 +14,7 @@
     "/books": {
       "get": {
         "security": [{
-          "CategoryAuth" : []
+          "BookAuth" : []
         }],
         "tags": ["Book API"],
         "description": "List all books",
@@ -48,7 +48,7 @@
       },
       "post": {
         "security": [{
-          "CategoryAuth" : []
+          "BookAuth" : []
         }],
         "tags": ["Book API"],
         "description": "Create new book",
@@ -95,21 +95,21 @@
     "/books/{bookId}": {
       "get" : {
         "security": [{
-          "CategoryAuth" : []
+          "BookAuth" : []
         }],
-        "tags": ["Category API"],
-        "summary": "Get category by Id",
-        "description": "Get category by id",
+        "tags": ["Book API"],
+        "summary": "Get Book by Id",
+        "description": "Get Book by id",
         "parameters": [
           {
-            "name": "categoryId",
+            "name": "bookId",
             "in": "path",
-            "description": "Category Id"
+            "description": "Book Id"
           }
         ],
         "responses": {
           "200" : {
-            "description": "Success get category",
+            "description": "Success get book",
             "content": {
               "application/json": {
                 "schema": {
@@ -133,30 +133,30 @@
       },
       "put" : {
         "security": [{
-          "CategoryAuth" : []
+          "BookAuth" : []
         }],
-        "tags": ["Category API"],
-        "summary": "Update category by Id",
-        "description": "Update category by Id",
+        "tags": ["Book API"],
+        "summary": "Update book by Id",
+        "description": "Update book by Id",
         "parameters": [
           {
-            "name": "categoryId",
+            "name": "bookId",
             "in": "path",
-            "description": "Category Id"
+            "description": "Book Id"
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOrUpdateCategory"
+                "$ref": "#/components/schemas/CreateOrUpdateBook"
               }
             }
           }
         },
         "responses": {
           "200" : {
-            "description": "Success get category",
+            "description": "Success get book",
             "content": {
               "application/json": {
                 "schema": {
@@ -180,21 +180,21 @@
       },
       "delete": {
         "security": [{
-          "CategoryAuth" : []
+          "BookAuth" : []
         }],
-        "tags": ["Category API"],
-        "summary": "Delete category by Id",
-        "description": "Delete category by id",
+        "tags": ["Book API"],
+        "summary": "Delete book by Id",
+        "description": "Delete book by id",
         "parameters": [
           {
-            "name": "categoryId",
+            "name": "bookId",
             "in": "path",
-            "description": "Category Id"
+            "description": "Book Id"
           }
         ],
         "responses": {
           "200" : {
-            "description": "Success delete category",
+            "description": "Success delete book",
             "content": {
               "application/json": {
                 "schema": {
@@ -217,11 +217,11 @@
   },
   "components": {
     "securitySchemes": {
-      "CategoryAuth" : {
+      "BookAuth" : {
         "type": "apiKey",
         "in" : "header",
         "name": "X-API-Key",
-        "description": "Authentication for Category API"
+        "description": "Authentication for Book API"
       }
     },
     "schemas": {
@@ -236,7 +236,7 @@
           }
         }
       },
-      "CreateOrUpdateCategory" : {
+      "CreateOrUpdateBook" : {
         "type": "object",
         "properties": {
           "name": {

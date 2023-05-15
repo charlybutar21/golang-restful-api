@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"charlybutar21/golang-restful-api/model/domain"
 	"context"
 	"database/sql"
-	"github.com/golang-restful-api/model/domain"
 )
 
 type BookRepository interface {
